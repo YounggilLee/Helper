@@ -1,10 +1,13 @@
+const Helper = require('../models/helper')
+
 module.exports = {
     greeting(req, res) {
        res.send({hi: 'there'})
     },
 
     create(req, res) {
-        console.log(req.body)
-        res.send({hi: 'there'})
+       const helperProps = req.body       
+       Helper.create(helperProps)
+        .then(helper => res.send(helper))
     }
 }
