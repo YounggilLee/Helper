@@ -5,9 +5,10 @@ module.exports = {
        res.send({hi: 'there'})
     },
 
-    create(req, res) {
+    create(req, res, next) {            // "next" is to use middleware
        const helperProps = req.body       
        Helper.create(helperProps)
         .then(helper => res.send(helper))
+        .catch(next)
     }
 }
