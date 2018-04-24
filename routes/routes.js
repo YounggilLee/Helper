@@ -7,4 +7,10 @@ module.exports = (app) => {
     app.get('/api', HelpersController.greeting)
 
     app.post('/api/helpers', HelpersController.create)
+
+    app.put('/api/helpers:id', HelpersController.edit)
+
+    app.delete('/api/helpers:id', HelpersController.delete)
+
+    app.get('api/helper', HelpersController.index)
 }

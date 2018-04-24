@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const PointSchema = new Schema({
+    type: { type: String, default: 'Point'},
+    coodinates: { type: [Number], index: '2dsphere' }
+})
+
 const HelperSchema = new Schema({
     email: {
         type: String,
@@ -10,9 +15,7 @@ const HelperSchema = new Schema({
         type: Boolean,
         default: false
     },
-    location:{
-
-    }
+    geometry: PointSchema
 })
 
 const Helper = mongoose.model('helper', HelperSchema)
