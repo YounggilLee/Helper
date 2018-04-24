@@ -5,13 +5,43 @@ module.exports = {
        res.send({hi: 'there'})
     },
 
-    index(req, res, next) {
-        const { lng, lat } = req.query    
+    // index(req, res, next) {
+    //     const { lng, lat } = req.query;
 
-        Helper.geoNear(
-            { type: 'Point' , coordinates: [lng, lat]},
-            { spherical: true, maxDistance: 200000 }
-        )
+    //     Helper.find({
+    //         'geometry.coordinates': {
+    //             $nearSphere: {
+    //                 $geometry: {
+    //                     type: "Point",
+    //                     coordinates: [parseFloat(lng), parseFloat(lat)]
+    //                 },
+    //                 $maxDistance: 200000
+    //             }
+    //         }
+    //     })
+    //         .then(helpers => res.send(helpers))
+    //         .catch(next);
+    // },
+
+    index(req, res, next) {
+        const { lng, lat } = req.query;
+        const point = {
+            type: 'Point',
+            coordinates: [parseFloat(lng), parseFloat(lat)],
+        };
+        Helper.aggregate([
+            {
+                $geoNear: {
+                    near: point,
+                    spherical: true,
+                    maxDistance: 200000,
+                    distanceField: 'dist.calculated'
+                }
+            }])
+            .then((helpers) => {
+                res.send(helpers);
+            })
+            .catch(next);
     },
 
     create(req, res, next) {            // "next" is to use middleware

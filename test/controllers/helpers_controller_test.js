@@ -56,4 +56,29 @@ describe('Helpers controller', () => {
         })
     })
 
+    it('GET to /api/helpers finds helpers in a location', done => {
+        const torontoHelper = Helper({
+            email: 'toronto@test.com',
+            geometry: { type: 'Point', coordinates:[-79.38, 43.65] }
+            
+        })
+        const oakvilleHelper = Helper({
+            email: 'oakville@test.com',
+            geometry: { type: 'Point', coordinates: [-80.24, 43.54] }
+
+        })
+
+        Promise.all([torontoHelper.save(), oakvilleHelper.save()])
+            .then(() => {
+                request(app)
+                    .get('/api/helpers?lng=-80&lat=43')
+                    .end((err, res) => {
+                        console.log(res)
+                        assert(res.body.length === 2)
+                        assert(res.body[0].email === 'oakville@test.com')
+                        done()
+                    })
+            })
+    })
+
 })

@@ -12,5 +12,5 @@ module.exports = (app) => {
 
     app.delete('/api/helpers:id', HelpersController.delete)
 
-    app.get('api/helper', HelpersController.index)
+    app.get('/api/helpers', HelpersController.index)
 }

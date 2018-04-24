@@ -12,6 +12,7 @@ before(done => {
 beforeEach(done => {
     const { helpers } = mongoose.connection.collections
     helpers.drop()
+     .then(() => helpers.ensureIndex({'geometry.coordinates': '2dsphere' }))
      .then(() => done())
      .catch(() => done())  //to prevent an error from first execute the test enviroment;there is no hepers data for the first time 
 }) 

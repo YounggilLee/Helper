@@ -3,7 +3,7 @@ const Schema = mongoose.Schema
 
 const PointSchema = new Schema({
     type: { type: String, default: 'Point'},
-    coodinates: { type: [Number], index: '2dsphere' }
+    coordinates: { type: [Number], index: '2dsphere' }
 })
 
 const HelperSchema = new Schema({
